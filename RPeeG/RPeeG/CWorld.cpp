@@ -206,47 +206,9 @@ void CWorld::setStartValues()
 	gridValue[989] = impassable;
 }
 
-void CWorld::renderScreen(int mapSection)
+void CWorld::renderScreen(SDL_Rect screen)
 {
-	SDL_Rect renderClip;
 
-	if (mapSection == 0)
-	{
-		renderClip.x = 0;
-		renderClip.y = 0;
-		renderClip.w = application.SCREEN_WIDTH;
-		renderClip.h = application.SCREEN_HEIGHT;
+	mapTexture.render(0, 0, screen);
 
-		mapTexture.render(0, 0, renderClip);
-	}
-
-	if (mapSection == 1)
-	{
-		renderClip.x = 640;
-		renderClip.y = 0;
-		renderClip.w = application.SCREEN_WIDTH;
-		renderClip.h = application.SCREEN_HEIGHT;
-
-		mapTexture.render(0, 0, renderClip);
-	}
-
-	if (mapSection == 2)
-	{
-		renderClip.x = 1280;
-		renderClip.y = 0;
-		renderClip.w = application.SCREEN_WIDTH;
-		renderClip.h = application.SCREEN_HEIGHT;
-
-		mapTexture.render(0, 0, renderClip);
-	}
-
-	if (mapSection == 3)
-	{
-		renderClip.x = 1920;
-		renderClip.y = 0;
-		renderClip.w = application.SCREEN_WIDTH;
-		renderClip.h = application.SCREEN_HEIGHT;
-
-		mapTexture.render(0, 0, renderClip);
-	}
 }

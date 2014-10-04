@@ -7,7 +7,7 @@ Player::Player(int x, int y)
 	posY = y;
 
 	velX = 0;
-	velY = 14;
+	velY = 10;
 
 }
 
@@ -68,31 +68,7 @@ void Player::inputHandler(SDL_Event event)
 
 }
 
-void Player::render()
-{
 
-	if (posX < 640)
-	{
-		playerTexture.render(posX, posY);
-	}
-
-	if (posX > 640)
-	{
-		playerTexture.render(posX - 640, posY);
-	}
-
-	if (posX > 1280)
-	{
-		playerTexture.render(posX - 1280, posY);
-	}
-
-	if (posX > 1920)
-	{
-		playerTexture.render(posX - 1920, posY);
-	}
-	
-
-}
 
 void Player::move()
 {
@@ -106,12 +82,17 @@ void Player::move()
 		posX = 0;
 	}
 
+	if (posX > application.LEVEL_WIDTH - PLAYER_WIDTH)
+	{
+		posX = application.LEVEL_WIDTH - PLAYER_WIDTH;
+	}
+
 
 	
-	if (velY >= 13.60 && velY < 14.39) 
+	if (velY >= 9.60 && velY < 10.39) 
 	{
 		isJumping = false;
-		velY = 14;
+		velY = 10;
 	}
 	
 
@@ -127,14 +108,22 @@ void Player::move()
 		posY = 0;
 	}
 
-	if (posY > 480 - PLAYER_HEIGHT)
+	if (posY > 360 - PLAYER_HEIGHT)
 	{
-		posY = 480 - PLAYER_HEIGHT;
+		posY = 360 - PLAYER_HEIGHT;
 	}
+
+	//Camera moving
+	
 
 }
 
 double Player::getposX()
 {
 	return posX;
+}
+
+double Player::getposY()
+{
+	return posY;
 }

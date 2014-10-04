@@ -11,8 +11,10 @@ class CApplication
 private:
 
 public:
-	static const int SCREEN_WIDTH = 640;
-	static const int SCREEN_HEIGHT = 480;
+	const int SCREEN_WIDTH = 640;
+	const int SCREEN_HEIGHT = 480;
+	const int LEVEL_WIDTH = 2560;
+	const int LEVEL_HEIGHT = 480;
 	
 
 	SDL_Window *window = NULL;

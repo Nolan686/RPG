@@ -12,7 +12,9 @@ int main(int argc, char *argv[])
 {
 	bool quit = false;
 
-	Player player(10,330);
+	Player player(320,240);
+
+	SDL_Rect playerCam = { 0, 0, 640, 480 };
 
 	application.run();
 
@@ -39,29 +41,32 @@ int main(int argc, char *argv[])
 
 		player.move();
 
-		if (player.getposX() < 640)
+		playerCam.x = (player.getposX() + player.PLAYER_WIDTH / 2) - (application.SCREEN_WIDTH / 2);
+		playerCam.y = (player.getposY() + player.PLAYER_HEIGHT / 2) - (application.SCREEN_HEIGHT / 2);
+
+		if (playerCam.x < 0)
 		{
-			std::cout << "Why you do dis" << std::endl;
-			world.renderScreen(0);
+			playerCam.x = 0;
 		}
 
-		if (player.getposX() >= 640)
+		if (playerCam.y < 0)
 		{
-			world.renderScreen(1);
+			playerCam.y = 0;
 		}
 
-		if (player.getposX() >= 1280)
+		if (playerCam.x > application.LEVEL_WIDTH - playerCam.w)
 		{
-			world.renderScreen(2);
+			playerCam.x = application.LEVEL_WIDTH - playerCam.w;
 		}
 
-		if (player.getposX() > 1920)
+		if (playerCam.y > application.LEVEL_HEIGHT - playerCam.h)
 		{
-			world.renderScreen(3);
+			playerCam.y = application.LEVEL_HEIGHT - playerCam.h;
 		}
 
+		world.renderScreen(playerCam);
 
-		player.render();
+		playerTexture.render(player.getposX() - playerCam.x, player.getposY() - playerCam.y);
 		
 
 		SDL_RenderPresent(application.renderer);

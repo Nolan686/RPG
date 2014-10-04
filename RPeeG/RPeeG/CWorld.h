@@ -25,7 +25,7 @@ public:
 
 	void mapGrid();
 	void setStartValues();
-	void renderScreen(int mapSection);
+	void renderScreen(SDL_Rect screen);
 };
 
 extern CWorld world;

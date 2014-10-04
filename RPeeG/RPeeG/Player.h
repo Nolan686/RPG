@@ -8,6 +8,7 @@
 #define PLAYER_H
 
 #include "TextureManager.h"
+#include "CWorld.h"
 
 class Player
 {
@@ -29,6 +30,8 @@ public:
 	const int PLAYER_WIDTH = 30;
 	double gravity = -0.36;
 
+	//Camera Rect, relative to player in middle of the screen
+
 	bool left = false;
 	bool right = false;
 	
@@ -39,9 +42,9 @@ public:
 	void move();
 	void attack(); //will take direction and posx/posy
 	void pickUp(); //takes direction
-	void render();
 	void jump();
 	double getposX();
+	double getposY();
 	Player(int x , int y);
 
 	void checkCollision(SDL_Rect player, SDL_Rect square);
