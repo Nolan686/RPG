@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player()
+Player::Player(int x, int y)
 {
 
 
@@ -8,7 +8,12 @@ Player::Player()
 
 }
 
+bool Player::checkPlayerCollision(float Ax, float Ay, float Aw, float Ah, float Bx, float By, float Bw, float Bh)
+{
 
+
+
+}
 
 void Player::inputHandler(SDL_Event event)
 {

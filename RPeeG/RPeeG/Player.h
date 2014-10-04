@@ -25,10 +25,12 @@ public:
 	const int PLAYER_HEIGHT = 10;
 	const int PLAYER_WIDTH = 10;
 
+	bool checkPlayerCollision(float Ax, float Ay, float Aw, float Ah, float Bx, float By, float Bw, float Bh);
 	void inputHandler(SDL_Event event);
 	void move(SDL_Event event);
 	void attack(); //will take direction and posx/posy
 	void pickUp(); //takes direction
+	Player(int x, int y);
 
 	void checkCollision(SDL_Rect player, SDL_Rect square);
 };
