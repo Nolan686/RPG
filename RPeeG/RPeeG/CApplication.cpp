@@ -51,7 +51,7 @@ bool CApplication::init()
 		}
 		else
 		{
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
 			if (renderer == NULL)
 			{
@@ -82,6 +82,12 @@ bool CApplication::loadMedia()
 	if (!(playerTexture.loadFromFile("player.bmp")))
 	{
 		std::cout << "Failed to load player Texture!" << std::endl;
+		success = false;
+	}
+
+	if (!(mapTexture.loadFromFile("world.png")))
+	{
+		std::cout << "Failed to load world texture!" << std::endl;
 		success = false;
 	}
 

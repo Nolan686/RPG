@@ -24,6 +24,7 @@ public:
 	SDL_Renderer *renderer;
 
 	bool loadFromFile(std::string path);
+	void render(int x, int y, SDL_Rect clip);
 	void render(int x, int y);
 
 	int getWidth();
@@ -32,7 +33,7 @@ public:
 	void free();
 };
 
-extern TextureManager somethingtexture;
+extern TextureManager mapTexture;
 extern TextureManager playerTexture;
 
 #endif

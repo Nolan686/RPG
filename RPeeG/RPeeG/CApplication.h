@@ -13,6 +13,7 @@ private:
 public:
 	static const int SCREEN_WIDTH = 640;
 	static const int SCREEN_HEIGHT = 480;
+	
 
 	SDL_Window *window = NULL;
 	SDL_Renderer* renderer = NULL;

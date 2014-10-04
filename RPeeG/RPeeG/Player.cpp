@@ -7,7 +7,7 @@ Player::Player(int x, int y)
 	posY = y;
 
 	velX = 0;
-	velY = 0;
+	velY = 14;
 
 }
 
@@ -24,53 +24,43 @@ void Player::inputHandler(SDL_Event event)
 	double mouseY = 0;
 	
 
-	if (event.type == SDL_KEYDOWN)
+	if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
 	{
-		
-		if (event.key.keysym.sym == SDLK_a)
+		switch (event.key.keysym.sym)
 		{
+		case SDLK_a:
 			velX -= PLAYER_VELOCITY;
-		}
+			break;
 
-		if (event.key.keysym.sym == SDLK_d)
-		{
+		case SDLK_d:
 			velX += PLAYER_VELOCITY;
+			break;
+
+		case SDLK_SPACE:
+			if (isJumping == false)
+			{
+				velY = -velY;
+				isJumping = true;
+			}
+			break;
 		}
-
-		if (event.key.keysym.sym == SDLK_SPACE)
-		{
-			velY = -velY;
-			
-		}
-
-		//Whatever the attack class/function whateverthefuck is gonna be
-		if (event.button.button == SDL_BUTTON_LEFT)
-		{
-
-			//Attack function
-
-		}
-
 	}
-
-	if (event.type == SDL_KEYUP)
+	if (event.type == SDL_KEYUP && event.key.repeat == 0)
 	{
-
-		if (event.key.keysym.sym == SDLK_a)
+		switch (event.key.keysym.sym)
 		{
-			velX = 0;
+		case SDLK_a:
+			velX += PLAYER_VELOCITY;
+			
+			break;
+		case SDLK_d:
+			velX -= PLAYER_VELOCITY;
+			
+			break;
+		case SDLK_SPACE: 
+			
+			break;
 		}
-		if (event.key.keysym.sym == SDLK_d)
-		{
-			velX = 0;
-		}
-		if (event.key.keysym.sym == SDLK_SPACE)
-		{
-			velY = 0;
-		}
-
-
-
 	}
 
 
@@ -81,7 +71,26 @@ void Player::inputHandler(SDL_Event event)
 void Player::render()
 {
 
-	playerTexture.render(posX, posY);
+	if (posX < 640)
+	{
+		playerTexture.render(posX, posY);
+	}
+
+	if (posX > 640)
+	{
+		playerTexture.render(posX - 640, posY);
+	}
+
+	if (posX > 1280)
+	{
+		playerTexture.render(posX - 1280, posY);
+	}
+
+	if (posX > 1920)
+	{
+		playerTexture.render(posX - 1920, posY);
+	}
+	
 
 }
 
@@ -97,13 +106,21 @@ void Player::move()
 		posX = 0;
 	}
 
-	if (posX > 640 - PLAYER_WIDTH)
-	{
-		posX = 640 - PLAYER_WIDTH;
-	}
 
+	
+	if (velY >= 13.60 && velY < 14.39) 
+	{
+		isJumping = false;
+		velY = 14;
+	}
+	
 
 	posY += velY;
+	if (isJumping)
+	{
+		velY = velY - gravity;
+	}
+	
 
 	if (posY < 0)
 	{
@@ -115,4 +132,9 @@ void Player::move()
 		posY = 480 - PLAYER_HEIGHT;
 	}
 
+}
+
+double Player::getposX()
+{
+	return posX;
 }

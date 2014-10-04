@@ -1,6 +1,6 @@
 #include "TextureManager.h"
 
-TextureManager somethingtexture;
+TextureManager mapTexture;
 TextureManager playerTexture;
 
 TextureManager::TextureManager()
@@ -59,6 +59,16 @@ void TextureManager::render(int x, int y)
 
 	SDL_RenderCopyEx(application.renderer, texture, NULL, &renderQuad, NULL, NULL, SDL_FLIP_NONE);
 	
+}
+
+void TextureManager::render(int x, int y, SDL_Rect clip)
+{
+
+	SDL_Rect renderQuad = { 0, 0, application.SCREEN_WIDTH, application.SCREEN_HEIGHT };
+	std::cout << clip.x << std::endl;
+
+	SDL_RenderCopyEx(application.renderer, texture, &clip, &renderQuad, NULL, NULL, SDL_FLIP_NONE);
+
 }
 
 int TextureManager::getWidth()
