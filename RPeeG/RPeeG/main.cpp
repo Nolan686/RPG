@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 		while (SDL_PollEvent(&event))
 		{
 
-			//Call Player handling shit
+			player.inputHandler(event);
 
 
 			if (event.type == SDL_QUIT)
@@ -33,8 +33,6 @@ int main(int argc, char *argv[])
 				quit = true;
 			}
 		}
-
-
 
 
 		SDL_RenderClear(application.renderer);

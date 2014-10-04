@@ -58,6 +58,7 @@ void TextureManager::render(int x, int y)
 	SDL_Rect renderQuad = { x, y, tWidth, tHeight };
 
 	SDL_RenderCopyEx(application.renderer, texture, NULL, &renderQuad, NULL, NULL, SDL_FLIP_NONE);
+	
 }
 
 int TextureManager::getWidth()

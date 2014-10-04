@@ -23,7 +23,6 @@ void Player::inputHandler(SDL_Event event)
 
 	if (event.type == SDL_KEYDOWN)
 	{
-		
 		if (event.key.keysym.sym == SDLK_a)
 		{
 			velX -= PLAYER_VELOCITY;
@@ -37,6 +36,7 @@ void Player::inputHandler(SDL_Event event)
 		if (event.key.keysym.sym == SDLK_SPACE)
 		{
 			velY = -velY;
+			
 		}
 
 		//Whatever the attack class/function whateverthefuck is gonna be
@@ -84,6 +84,7 @@ void Player::render()
 void Player::move()
 {
 	posX += velX;
+	
 
 	if (posX < 0)
 	{
