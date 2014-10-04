@@ -3,8 +3,11 @@
 #include <iostream>
 #include <string>
 
+
 #ifndef PLAYER_H
 #define PLAYER_H
+
+#include "TextureManager.h"
 
 class Player
 {
@@ -22,15 +25,16 @@ private:
 
 public:
 	const double PLAYER_VELOCITY = 5;
-	const int PLAYER_HEIGHT = 10;
-	const int PLAYER_WIDTH = 10;
+	const int PLAYER_HEIGHT = 30;
+	const int PLAYER_WIDTH = 30;
 
-	bool checkPlayerCollision(float Ax, float Ay, float Aw, float Ah, float Bx, float By, float Bw, float Bh);
+	bool checkPlayerCollision(SDL_Rect player, SDL_Rect object);
 	void inputHandler(SDL_Event event);
-	void move(SDL_Event event);
+	void move();
 	void attack(); //will take direction and posx/posy
 	void pickUp(); //takes direction
-	Player(int x, int y);
+	void render();
+	Player(int x , int y);
 
 	void checkCollision(SDL_Rect player, SDL_Rect square);
 };
