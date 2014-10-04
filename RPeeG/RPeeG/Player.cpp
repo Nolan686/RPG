@@ -3,9 +3,11 @@
 
 Player::Player(int x, int y)
 {
+	posX = x;
+	posY = y;
 
-
-
+	velX = 0;
+	velY = 0;
 
 }
 
@@ -20,9 +22,11 @@ void Player::inputHandler(SDL_Event event)
 {
 	double mouseX = 0;
 	double mouseY = 0;
+	
 
 	if (event.type == SDL_KEYDOWN)
 	{
+		
 		if (event.key.keysym.sym == SDLK_a)
 		{
 			velX -= PLAYER_VELOCITY;
@@ -54,15 +58,15 @@ void Player::inputHandler(SDL_Event event)
 
 		if (event.key.keysym.sym == SDLK_a)
 		{
-			velX += PLAYER_VELOCITY;
+			velX = 0;
 		}
 		if (event.key.keysym.sym == SDLK_d)
 		{
-			velX -= PLAYER_VELOCITY;
+			velX = 0;
 		}
 		if (event.key.keysym.sym == SDLK_SPACE)
 		{
-			velY = velY;
+			velY = 0;
 		}
 
 
@@ -84,6 +88,8 @@ void Player::render()
 void Player::move()
 {
 	posX += velX;
+
+	std::cout << velX << ", " << velY << std::endl;
 	
 
 	if (posX < 0)

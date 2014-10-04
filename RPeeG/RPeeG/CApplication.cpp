@@ -92,7 +92,7 @@ bool CApplication::loadMedia()
 
 void CApplication::close()
 {
-	//sometexture.free();
+	playerTexture.free();
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);

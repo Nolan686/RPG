@@ -24,7 +24,7 @@ private:
 	const int RIGHT = 1;
 
 public:
-	const double PLAYER_VELOCITY = 5;
+	const double PLAYER_VELOCITY = 0.1;
 	const int PLAYER_HEIGHT = 30;
 	const int PLAYER_WIDTH = 30;
 
