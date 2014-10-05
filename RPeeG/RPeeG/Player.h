@@ -26,25 +26,31 @@ private:
 
 public:
 	const double PLAYER_VELOCITY = 5;
-	const int PLAYER_HEIGHT = 30;
-	const int PLAYER_WIDTH = 30;
-	double gravity = -0.36;
+	const int PLAYER_HEIGHT = 144;
+	const int PLAYER_WIDTH = 150;
+	double gravity = -0.66;
 
 	//Camera Rect, relative to player in middle of the screen
 
-	bool left = false;
+	bool left = true;
 	bool right = false;
 	
 	bool isJumping = false;
+	bool CanDoSecondJump = false;
+	int jumping = 0;
 
-	bool checkPlayerCollision(SDL_Rect player, SDL_Rect object);
+	SDL_Rect playerCam;
+
+	
 	void inputHandler(SDL_Event event);
 	void move();
 	void attack(); //will take direction and posx/posy
 	void pickUp(); //takes direction
 	void jump();
+	void render(int frame);
 	double getposX();
 	double getposY();
+	double getvelY(double distanceInit, double distanceFinal, double initVelY);
 	Player(int x , int y);
 
 	void checkCollision(SDL_Rect player, SDL_Rect square);

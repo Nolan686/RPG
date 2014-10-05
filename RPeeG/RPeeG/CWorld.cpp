@@ -204,7 +204,7 @@ void CWorld::setStartValues()
 	}
 
 	gridValue[989] = impassable;
-}
+} 
 
 void CWorld::renderScreen(SDL_Rect screen)
 {

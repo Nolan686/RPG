@@ -1,11 +1,12 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <iostream>
-#include <string>
+
 
 #ifndef CWORLD_H
 #define CWORLD_H
 
+#include <SDL.h>
+#include <SDL_image.h>
+#include <iostream>
+#include <string>
 #include "TextureManager.h"
 
 class CWorld

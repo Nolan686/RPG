@@ -1,7 +1,11 @@
 #include "TextureManager.h"
 
 TextureManager mapTexture;
-TextureManager playerTexture;
+TextureManager playerTextureLeft;
+TextureManager playerTextureRight;
+TextureManager skeletonTextureLeft;
+TextureManager skeletonTextureRight;
+TextureManager playerSpriteSheet;
 
 TextureManager::TextureManager()
 {
@@ -68,6 +72,31 @@ void TextureManager::render(int x, int y, SDL_Rect clip)
 	std::cout << clip.x << std::endl;
 
 	SDL_RenderCopyEx(application.renderer, texture, &clip, &renderQuad, NULL, NULL, SDL_FLIP_NONE);
+
+}
+
+void TextureManager::renderShit(int x, int y, SDL_Rect* clip)
+{
+
+	SDL_Rect renderQuad = { x, y, clip->w, clip->h };
+	std::cout << clip->x << std::endl;
+
+	SDL_RenderCopyEx(application.renderer, texture, clip, &renderQuad, NULL, NULL, SDL_FLIP_NONE);
+
+}
+
+void TextureManager::renderSpriteSheet(int x, int y, SDL_Rect* clip)
+{
+
+	SDL_Rect renderQuad = {x, y, tWidth, tHeight};
+
+	if (clip != NULL)
+	{
+		renderQuad.w = clip->w;
+		renderQuad.h = clip->h;
+	}
+
+	SDL_RenderCopy(renderer, texture, clip, &renderQuad);
 
 }
 
