@@ -6,6 +6,7 @@ TextureManager playerTextureRight;
 TextureManager skeletonTextureLeft;
 TextureManager skeletonTextureRight;
 TextureManager playerSpriteSheet;
+TextureManager playerSpriteSheetLeft;
 
 TextureManager::TextureManager()
 {
@@ -75,7 +76,7 @@ void TextureManager::render(int x, int y, SDL_Rect clip)
 
 }
 
-void TextureManager::renderShit(int x, int y, SDL_Rect* clip)
+void TextureManager::renderAnimation(int x, int y, SDL_Rect* clip)
 {
 
 	SDL_Rect renderQuad = { x, y, clip->w, clip->h };

@@ -16,10 +16,10 @@ int main(int argc, char *argv[])
 	Player player(320,240);
 	Skeleton skeleton(520, 270);
 
-
 	application.run();
 
-	int frame = 0;
+	int frameRight = 594;
+	int frameLeft = 0;
 
 	while (quit == false)
 	{
@@ -40,6 +40,9 @@ int main(int argc, char *argv[])
 			}
 		}
 
+		//Play music
+		//sound.playMusic(sound.goneFishing);
+
 		SDL_RenderClear(application.renderer);
 
 		//Logic
@@ -52,19 +55,43 @@ int main(int argc, char *argv[])
 		//Render player 
 
 		
-		player.render(frame);
-		skeleton.render(skeleton.getposX() - player.playerCam.x, skeleton.getposY());
+		player.render(frameRight, frameLeft);
+		skeleton.render(skeleton.getposX() - player.playerCam.x, skeleton.getposY() - player.playerCam.y);
 		
 
 		SDL_RenderPresent(application.renderer);
 
-		++frame;
-
-		if ((frame / 24) >= playerSpriteSheet.WALKING_ANIMATION_FRAMES)
+		
+		//Sprite sheet frame setting. Resets after clip 27
+		if ((frameRight / 27) >= playerSpriteSheet.WALKING_ANIMATION_FRAMES-1)
 		{
-			frame = 0;
+			frameRight = 0;
+		}
+		//Increase or decrease speed of animation here
+		if (player.getRight())
+		{
+			frameRight += 14;
+		}
+		//Set starting animation clip. divide by 27 to get current clip
+		if (player.getRight() == false)
+		{
+			frameRight = 594;
+		}
+		//Same as above one but for running left
+		if ((frameLeft / 27) >= playerSpriteSheet.WALKING_ANIMATION_FRAMES - 1)
+		{
+			frameLeft = 0;
 		}
 
+		if (player.getLeft())
+		{
+			frameLeft += 14;
+		}
+		if (player.getLeft() == false)
+		{
+			frameLeft = 0;
+		}
+		
 
 	}
 

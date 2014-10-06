@@ -7,7 +7,7 @@ Player::Player(int x, int y)
 	posY = y;
 
 	velX = 0;
-	velY = 15 ;
+	velY = 25 ;
 
 	playerCam = { 0, 0, application.SCREEN_WIDTH, application.SCREEN_HEIGHT };
 }
@@ -26,26 +26,35 @@ void Player::inputHandler(SDL_Event event)
 		{
 		case SDLK_a:
 			velX -= PLAYER_VELOCITY;
+			//Is moving left
 			left = true;
-			right = false;
+			//If not moving right currently, A was the first key to be pressed in the case that D gets pressed while holding this down
+			if (right == false)
+			{
+				firstLeft = true;
+			}
+			
 			break;
 
 		case SDLK_d:
 			velX += PLAYER_VELOCITY;
+			//Is moving right
 			right = true;
-			left = false;
+			//If not moving left currently, D was the first key to be pressed in the case that A gets pressed while holding this down
+			if (left == false)
+			{
+				firstRight = true;
+			}
+			
+			
 			break;
 
 		case SDLK_SPACE:
-			if (isJumping == false || CanDoSecondJump == true)
+			
+			if (isJumping == false)
 			{
-				
 				velY = -velY;
 				isJumping = true;
-				if (jumping == 1)
-				{
-					CanDoSecondJump == true;
-				}
 			}
 			break;
 		}
@@ -56,15 +65,39 @@ void Player::inputHandler(SDL_Event event)
 		{
 		case SDLK_a:
 			velX += PLAYER_VELOCITY;
+			//Stopped moving left
+			left = false;
+			//If not holding down the D key and A is let go, the last direction you were facing is left
+			if (right == false)
+			{
+				lastLeft = true;
+			}
+			if (right == false && firstLeft == true)
+			{
+				firstLeft = false;
+			}
+			
 			
 			break;
 		case SDLK_d:
 			velX -= PLAYER_VELOCITY;
+			//Stopped moving right
 			right = false;
+			//If not holding down the A key and D is let go, the last direction you were facing is right
+			if (left == false)
+			{
+				lastRight = true;
+			}
+			if (left == false && firstRight == true)
+			{
+				firstRight = false; 
+			}
+			
+			
 			
 			break;
 		case SDLK_SPACE: 
-			jumping++;
+			
 			break;
 		}
 	}
@@ -78,75 +111,85 @@ void Player::inputHandler(SDL_Event event)
 
 void Player::move()
 {
-
-
-	posX += velX;
-
-	std::cout << velX << ", " << velY << std::endl;
 	
 
+	
+	//If both direction keys are pressed, quit moving until one of the two is released
+	if (left && right)
+	{
+		velX = 0;
+	}
+	//Add velocity
+	posX += velX;
+	//Read out velocity
+	std::cout << velX << ", " << velY << std::endl;
+	
+	//Keep player in bounds
 	if (posX < 0)
 	{
 		posX = 0;
 	}
-
+	//Keep player in bounds
 	if (posX > application.LEVEL_WIDTH - PLAYER_WIDTH)
 	{
 		posX = application.LEVEL_WIDTH - PLAYER_WIDTH;
 	}
 
 
-	
-	if (velY >= 14.60 && velY < 15.39) 
+	//If y velocity is the same as the start of the jump, jumping is false, and set the velocity back to normal(need a new system that sets isJumping to false based on if there is collision on the bottom of the player)
+	if (velY >= 24.60 && velY < 25.39) 
 	{
 		isJumping = false;
-		velY = 15;
+		velY = 25;
 		
 	}
-	//Terminal velocity. Velocity can only get up to 15
-	if (velY > 15)
-	{
-		velY = 15;
-	}
-
+	
+	//Apply y velocity
 	posY += velY;
+	//While jumping apply gravity
 	if (isJumping)
 	{
 		velY = velY - gravity;
 	}
 	
-
+	//If hit ceiling, stop, and set whatever y velocity you had to 0
 	if (posY < 0)
 	{
 		posY = 0;
+		velY = 0;
 	}
-
-	if (posY > 360 - PLAYER_HEIGHT)
+	//Floor boundaries
+	if (posY > application.SCREEN_HEIGHT - 140 - PLAYER_HEIGHT)
 	{
-		posY = 360 - PLAYER_HEIGHT;
+		posY = application.SCREEN_HEIGHT - 140 - PLAYER_HEIGHT;
 	}
-
+	//Set camera offsets
 	playerCam.x = (getposX() + PLAYER_WIDTH / 2) - (application.SCREEN_WIDTH / 2);
 	playerCam.y = (getposY() + PLAYER_HEIGHT / 2) - (application.SCREEN_HEIGHT / 2);
-
+	//Keep camera in bounds
 	if (playerCam.x < 0)
 	{
 		playerCam.x = 0;
 	}
-
+	//Keep camera in bounds
 	if (playerCam.y < 0)
 	{
 		playerCam.y = 0;
 	}
-
+	//Keep camera in bounds
 	if (playerCam.x > application.LEVEL_WIDTH - playerCam.w)
 	{
 		playerCam.x = application.LEVEL_WIDTH - playerCam.w;
 	}
-
+	//Keep camera in bounds
 	if (playerCam.y > application.LEVEL_HEIGHT - playerCam.h)
 	{
 		playerCam.y = application.LEVEL_HEIGHT - playerCam.h;
+	}
+
+	if (posY > 380 & posX < 550)
+	{
+		posY = 380;
 	}
 
 	//Camera moving
@@ -168,17 +211,52 @@ double Player::getvelY(double distanceInit, double distanceFinal, double initVel
 }
 
 
-void Player::render(int frame)
+void Player::render(int frameRight, int frameLeft)
 {
 	//Render player in relation to the camera (in the middle of the camera always, except right now because the screen is so small and the world is poop)
-	SDL_Rect* currentClip = &playerSpriteSheet.playerSpriteClips[frame/24];
+	SDL_Rect* currentClipRight = &playerSpriteSheet.playerSpriteClips[frameRight/27];
+	SDL_Rect* currentClipLeft = &playerSpriteSheetLeft.playerLeftSpriteClips[frameLeft / 27];
 
 	
-	if (right)
+	if (right && left == false)
 	{
-		playerSpriteSheet.renderShit(getposX() - playerCam.x, getposY() - playerCam.y, currentClip);
+		playerSpriteSheet.renderAnimation(getposX() - playerCam.x, getposY() - playerCam.y, currentClipRight);
+		lastLeft = false;
+		lastRight = false;
+	}
+	if (left && right == false)
+	{
+		playerSpriteSheetLeft.renderAnimation(getposX() - playerCam.x, getposY() - playerCam.y, currentClipLeft);
+		lastRight = false;
+		lastLeft = false;
+		
 	}
 	
+	if (lastRight)
+	{
+		playerTextureRight.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
+		
+	}
+	if (lastLeft)
+	{
+		playerTextureLeft.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
+		
+	}
+
+	if (left == false && right == false && lastRight == false && lastLeft == false)
+	{
+		playerTextureRight.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
+	}
+	if (left == true && right == true && firstRight == true)
+	{
+		playerTextureRight.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
+	}
+	if (left == true && right == true && firstLeft == true)
+	{
+		playerTextureLeft.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
+	}
+	
+
 	
 	
 }
@@ -191,4 +269,16 @@ double Player::getposX()
 double Player::getposY()
 {
 	return posY;
+}
+
+
+
+bool Player::getLeft()
+{
+	return left;
+}
+
+bool Player::getRight()
+{
+	return right;
 }

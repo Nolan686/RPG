@@ -26,7 +26,7 @@ public:
 
 	bool loadFromFile(std::string path);
 	void render(int x, int y, SDL_Rect clip);
-	void TextureManager::renderShit(int x, int y, SDL_Rect* clip);
+	void TextureManager::renderAnimation(int x, int y, SDL_Rect* clip);
 	void render(int x, int y);
 
 	void renderSpriteSheet(int x, int y, SDL_Rect* clip);
@@ -34,9 +34,10 @@ public:
 	int getWidth();
 	int getHeight();
 
-	static const int WALKING_ANIMATION_FRAMES = 24;
+	static const int WALKING_ANIMATION_FRAMES = 27;
 
-	SDL_Rect playerSpriteClips[24];
+	SDL_Rect playerSpriteClips[27];
+	SDL_Rect playerLeftSpriteClips[27];
 
 
 	void free();
@@ -48,5 +49,6 @@ extern TextureManager playerTextureRight;
 extern TextureManager skeletonTextureLeft;
 extern TextureManager skeletonTextureRight;
 extern TextureManager playerSpriteSheet;
+extern TextureManager playerSpriteSheetLeft;
 
 #endif

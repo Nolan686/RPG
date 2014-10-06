@@ -7,16 +7,18 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <string>
+#include <SDL_mixer.h>
+#include "Sound.h"
 
 class CApplication
 {
 private:
 
 public:
-	static const int SCREEN_WIDTH = 640;
-	static const int SCREEN_HEIGHT = 480;
-	int LEVEL_WIDTH = 2560;
-	int LEVEL_HEIGHT = 480;
+	const int SCREEN_WIDTH = 1920;
+	const int SCREEN_HEIGHT = 1080;
+	int LEVEL_WIDTH = 2048;
+	int LEVEL_HEIGHT = 1200;
 	
 
 	SDL_Window *window = NULL;
@@ -26,6 +28,7 @@ public:
 
 	bool init();
 	bool loadMedia();
+	bool loadMusic();
 	SDL_Texture* loadTexture(std::string path);
 	void close();
 	void run();

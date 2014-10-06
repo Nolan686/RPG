@@ -25,15 +25,19 @@ private:
 	const int RIGHT = 1;
 
 public:
-	const double PLAYER_VELOCITY = 5;
-	const int PLAYER_HEIGHT = 144;
-	const int PLAYER_WIDTH = 150;
+	const double PLAYER_VELOCITY = 4;
+	const int PLAYER_HEIGHT = 125;
+	const int PLAYER_WIDTH = 131;
 	double gravity = -0.66;
 
 	//Camera Rect, relative to player in middle of the screen
 
-	bool left = true;
+	bool left = false;
 	bool right = false;
+	bool lastLeft = false;
+	bool lastRight = false;
+	bool firstLeft = false;
+	bool firstRight = false;
 	
 	bool isJumping = false;
 	bool CanDoSecondJump = false;
@@ -47,9 +51,11 @@ public:
 	void attack(); //will take direction and posx/posy
 	void pickUp(); //takes direction
 	void jump();
-	void render(int frame);
+	void render(int frameRight, int frameLeft);
 	double getposX();
 	double getposY();
+	bool getLeft();
+	bool getRight();
 	double getvelY(double distanceInit, double distanceFinal, double initVelY);
 	Player(int x , int y);
 
