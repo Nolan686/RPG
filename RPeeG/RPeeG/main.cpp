@@ -41,13 +41,13 @@ int main(int argc, char *argv[])
 		}
 
 		//Play music
-		//sound.playMusic(sound.goneFishing);
+		sound.playMusic(sound.goneFishing);
 
 		SDL_RenderClear(application.renderer);
 
 		//Logic
 		player.move();
-		//skeleton.move();
+		skeleton.move();
 
 		
 		//Render world within the camera

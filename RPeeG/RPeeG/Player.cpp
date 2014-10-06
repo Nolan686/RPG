@@ -217,40 +217,44 @@ void Player::render(int frameRight, int frameLeft)
 	SDL_Rect* currentClipRight = &playerSpriteSheet.playerSpriteClips[frameRight/27];
 	SDL_Rect* currentClipLeft = &playerSpriteSheetLeft.playerLeftSpriteClips[frameLeft / 27];
 
-	
+	//If moving right and the left key isnt press, play the running rightwards anmiation
 	if (right && left == false)
 	{
 		playerSpriteSheet.renderAnimation(getposX() - playerCam.x, getposY() - playerCam.y, currentClipRight);
 		lastLeft = false;
 		lastRight = false;
 	}
+	// if moving left and the right key isnt pressed, play the running leftwards animation
 	if (left && right == false)
 	{
 		playerSpriteSheetLeft.renderAnimation(getposX() - playerCam.x, getposY() - playerCam.y, currentClipLeft);
 		lastRight = false;
 		lastLeft = false;
-		
 	}
 	
+	//If the last movement was moving right, set the standing still image to the rightward facing one
 	if (lastRight)
 	{
 		playerTextureRight.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
 		
 	}
+	//If the last movement was moving left, set the standing still image to the leftward facing one
 	if (lastLeft)
 	{
 		playerTextureLeft.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
 		
 	}
-
+	//If not moving at all and no key has been pressed yet (right when the game starts), start the character out facing right
 	if (left == false && right == false && lastRight == false && lastLeft == false)
 	{
 		playerTextureRight.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
 	}
+	//If both keys are held down and the right key was pressed first, keep the character facing right
 	if (left == true && right == true && firstRight == true)
 	{
 		playerTextureRight.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
 	}
+	//If both keys are held down adn the left key was pressed first, keep the character facing left
 	if (left == true && right == true && firstLeft == true)
 	{
 		playerTextureLeft.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
