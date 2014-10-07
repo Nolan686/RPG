@@ -9,14 +9,15 @@
 #include <string>
 #include <SDL_mixer.h>
 #include "Sound.h"
+#include "AnimationClips.h"
 
 class CApplication
 {
 private:
 
 public:
-	const int SCREEN_WIDTH = 1920;
-	const int SCREEN_HEIGHT = 1080;
+	const int SCREEN_WIDTH = 1280;
+	const int SCREEN_HEIGHT = 720;
 	int LEVEL_WIDTH = 2048;
 	int LEVEL_HEIGHT = 1200;
 	

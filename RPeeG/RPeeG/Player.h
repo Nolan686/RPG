@@ -35,9 +35,14 @@ public:
 	bool left = false;
 	bool right = false;
 	bool lastLeft = false;
-	bool lastRight = false;
+	bool lastRight = true;
 	bool firstLeft = false;
 	bool firstRight = false;
+
+	int frameRight;
+	int frameLeft;
+	int frameStandStillLeft;
+	int frameStandStillRight;
 	
 	bool isJumping = false;
 	bool CanDoSecondJump = false;
@@ -51,7 +56,8 @@ public:
 	void attack(); //will take direction and posx/posy
 	void pickUp(); //takes direction
 	void jump();
-	void render(int frameRight, int frameLeft);
+	void render();
+	void animationLogic();
 	double getposX();
 	double getposY();
 	bool getLeft();

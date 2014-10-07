@@ -7,6 +7,8 @@ TextureManager skeletonTextureLeft;
 TextureManager skeletonTextureRight;
 TextureManager playerSpriteSheet;
 TextureManager playerSpriteSheetLeft;
+TextureManager playerStandStillRight;
+TextureManager playerStandStillLeft;
 
 TextureManager::TextureManager()
 {
@@ -14,6 +16,8 @@ TextureManager::TextureManager()
 	tWidth = 0;
 	tHeight = 0;
 }
+
+
 TextureManager::~TextureManager()
 {
 	free();

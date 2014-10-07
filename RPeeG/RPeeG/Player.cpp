@@ -10,6 +10,13 @@ Player::Player(int x, int y)
 	velY = 25 ;
 
 	playerCam = { 0, 0, application.SCREEN_WIDTH, application.SCREEN_HEIGHT };
+
+	//Set frame for right
+	frameRight = 594;
+	//Set frame for left
+	frameLeft = 0;
+	frameStandStillLeft = 0;
+	frameStandStillRight = 0;
 }
 
 
@@ -88,6 +95,7 @@ void Player::inputHandler(SDL_Event event)
 			{
 				lastRight = true;
 			}
+			
 			if (left == false && firstRight == true)
 			{
 				firstRight = false; 
@@ -107,7 +115,56 @@ void Player::inputHandler(SDL_Event event)
 
 }
 
+void Player::animationLogic()
+{
+	if ((frameRight / 27) >= playerSpriteSheet.WALKING_ANIMATION_FRAMES - 1)
+	{
+		frameRight = 0;
+	}
+	//Increase or decrease speed of animation here
+	if (getRight())
+	{
+		frameRight += 16;
+	}
+	//Set starting animation clip. divide by 27 to get current clip
+	if (getRight() == false)
+	{
+		frameRight = 594;
+	}
+	//Same as above one but for running left
+	if ((frameLeft / 27) >= playerSpriteSheet.WALKING_ANIMATION_FRAMES - 1)
+	{
+		frameLeft = 0;
+	}
 
+	if (getLeft())
+	{
+		frameLeft += 16;
+	}
+	if (getLeft() == false)
+	{
+		frameLeft = 0;
+	}
+
+	if ((frameStandStillRight / 22) >= playerSpriteSheet.WALKING_ANIMATION_FRAMES -6)
+	{
+		frameStandStillRight = 0;
+	}
+
+	if (lastRight)
+	{
+		frameStandStillRight += 8;
+	}
+	if (lastRight == false)
+	{
+		frameStandStillRight = 0;
+	}
+
+	
+
+
+
+}
 
 void Player::move()
 {
@@ -122,7 +179,7 @@ void Player::move()
 	//Add velocity
 	posX += velX;
 	//Read out velocity
-	std::cout << velX << ", " << velY << std::endl;
+	
 	
 	//Keep player in bounds
 	if (posX < 0)
@@ -159,9 +216,9 @@ void Player::move()
 		velY = 0;
 	}
 	//Floor boundaries
-	if (posY > application.SCREEN_HEIGHT - 140 - PLAYER_HEIGHT)
+	if (posY > application.LEVEL_HEIGHT - 240 - PLAYER_HEIGHT)
 	{
-		posY = application.SCREEN_HEIGHT - 140 - PLAYER_HEIGHT;
+		posY = application.LEVEL_HEIGHT - 240 - PLAYER_HEIGHT;
 	}
 	//Set camera offsets
 	playerCam.x = (getposX() + PLAYER_WIDTH / 2) - (application.SCREEN_WIDTH / 2);
@@ -200,7 +257,7 @@ void Player::move()
 double Player::getvelY(double distanceInit, double distanceFinal, double initVelY)
 {
 	double finalVelY;
-	//Need the pixel position when the jump starts and the pixel position for the distance wanting to calculate velY for
+	//Need the pixel position when the jump starts and the pixel position for the distance wanting to calculate velY for (vf^2) = ((vi^2) + ((2)(a)(d))
 
 
 	finalVelY = sqrt((pow(initVelY, 2)) + ((2)*(gravity * (distanceFinal - distanceInit))));
@@ -211,11 +268,18 @@ double Player::getvelY(double distanceInit, double distanceFinal, double initVel
 }
 
 
-void Player::render(int frameRight, int frameLeft)
+void Player::render()
 {
+
+	
+	animationLogic();
+
+	
+
 	//Render player in relation to the camera (in the middle of the camera always, except right now because the screen is so small and the world is poop)
 	SDL_Rect* currentClipRight = &playerSpriteSheet.playerSpriteClips[frameRight/27];
 	SDL_Rect* currentClipLeft = &playerSpriteSheetLeft.playerLeftSpriteClips[frameLeft / 27];
+	SDL_Rect* currentClipStandStillRight = &playerStandStillRight.playerStandStillRightClips[frameStandStillRight / 22];
 
 	//If moving right and the left key isnt press, play the running rightwards anmiation
 	if (right && left == false)
@@ -235,7 +299,7 @@ void Player::render(int frameRight, int frameLeft)
 	//If the last movement was moving right, set the standing still image to the rightward facing one
 	if (lastRight)
 	{
-		playerTextureRight.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
+		playerStandStillRight.renderAnimation(getposX() - playerCam.x, getposY() - playerCam.y +5, currentClipStandStillRight);
 		
 	}
 	//If the last movement was moving left, set the standing still image to the leftward facing one
@@ -245,14 +309,10 @@ void Player::render(int frameRight, int frameLeft)
 		
 	}
 	//If not moving at all and no key has been pressed yet (right when the game starts), start the character out facing right
-	if (left == false && right == false && lastRight == false && lastLeft == false)
-	{
-		playerTextureRight.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
-	}
 	//If both keys are held down and the right key was pressed first, keep the character facing right
 	if (left == true && right == true && firstRight == true)
 	{
-		playerTextureRight.render(getposX() - playerCam.x, getposY() - playerCam.y + 5);
+		playerStandStillRight.renderAnimation(getposX() - playerCam.x, getposY() - playerCam.y + 5, currentClipStandStillRight);
 	}
 	//If both keys are held down adn the left key was pressed first, keep the character facing left
 	if (left == true && right == true && firstLeft == true)

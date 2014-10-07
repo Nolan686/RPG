@@ -38,6 +38,8 @@ public:
 
 	SDL_Rect playerSpriteClips[27];
 	SDL_Rect playerLeftSpriteClips[27];
+	SDL_Rect playerStandStillRightClips[22];
+	SDL_Rect playerStandStillLeftClips[22];
 
 
 	void free();
@@ -50,5 +52,8 @@ extern TextureManager skeletonTextureLeft;
 extern TextureManager skeletonTextureRight;
 extern TextureManager playerSpriteSheet;
 extern TextureManager playerSpriteSheetLeft;
+extern TextureManager playerStandStillRight;
+extern TextureManager playerStandStillLeft;
+
 
 #endif
