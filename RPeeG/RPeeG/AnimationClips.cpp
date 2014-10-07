@@ -11,6 +11,17 @@ AnimationClips::AnimationClips()
 
 }
 
+
+void AnimationClips::setClips(int numFrames, SDL_Rect* clipRect, int index )
+{
+	SDL_Rect tempRect = clipRect[index];
+	for (int x = 0; x < numFrames; x++)
+	{
+		tempRect[numFrames].x = 0;
+	}
+
+}
+
 void AnimationClips::playerLeftRunningClips()
 {
 	playerSpriteSheetLeft.playerLeftSpriteClips[0].x = 684;

@@ -21,6 +21,7 @@ public:
 	void playerRightRunningClips();
 	void playerStandStillLeftClips();
 	void playerStandStillRightClips();
+	void setClips(int numFrames, SDL_Rect* clipRect, int index);
 
 
 

@@ -18,8 +18,9 @@ private:
 	int tHeight;
 
 public:
-	TextureManager();
+	TextureManager(int width, int height);
 	~TextureManager();
+	TextureManager();
 
 	SDL_Window *window;
 	SDL_Renderer *renderer;
@@ -35,6 +36,8 @@ public:
 	int getHeight();
 
 	static const int WALKING_ANIMATION_FRAMES = 27;
+	static const int WALKINGLEFT_ANIMATION_FRAMES = 27;
+	static const int STANDSTILLRIGHT_ANIMATION_FRAMES = 22;
 
 	SDL_Rect playerSpriteClips[27];
 	SDL_Rect playerLeftSpriteClips[27];

@@ -107,6 +107,8 @@ bool CApplication::loadMedia()
 		std::cout << "Failed to load player Texture!" << std::endl;
 		success = false;
 	}
+	
+	
 
 	if (!(mapTexture.loadFromFile("world.png")))
 	{

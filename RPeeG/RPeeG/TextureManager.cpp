@@ -1,14 +1,21 @@
 #include "TextureManager.h"
 
 TextureManager mapTexture;
-TextureManager playerTextureLeft;
-TextureManager playerTextureRight;
-TextureManager skeletonTextureLeft;
-TextureManager skeletonTextureRight;
-TextureManager playerSpriteSheet;
-TextureManager playerSpriteSheetLeft;
-TextureManager playerStandStillRight;
+TextureManager playerTextureLeft(90,120);
+TextureManager playerTextureRight(90,120);
+TextureManager skeletonTextureLeft(30,60);
+TextureManager skeletonTextureRight(30,60);
+TextureManager playerSpriteSheet(800,530);
+TextureManager playerSpriteSheetLeft(800,530);
+TextureManager playerStandStillRight(2138, 150);
 TextureManager playerStandStillLeft;
+
+TextureManager::TextureManager(int width, int height)
+{
+	texture = NULL;
+	tWidth = width;
+	tHeight = height;
+}
 
 TextureManager::TextureManager()
 {
@@ -16,7 +23,6 @@ TextureManager::TextureManager()
 	tWidth = 0;
 	tHeight = 0;
 }
-
 
 TextureManager::~TextureManager()
 {
