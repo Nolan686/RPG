@@ -108,7 +108,7 @@ bool CApplication::loadMedia()
 		success = false;
 	}
 	
-	
+	animationClips.setClips(playerSpriteSheet.WALKING_ANIMATION_FRAMES, playerSpriteSheet.playerSpriteClips, 27);
 
 	if (!(mapTexture.loadFromFile("world.png")))
 	{
